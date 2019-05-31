@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Indigo - Alaska Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css">
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png">
+    <button class="hamburger" onclick="toggleMenu(this)">
+      <div class="icon"></div>
+    </button>
+  </header>
+  <div class="content">
+    <ul class="breadcrumbs">
+      <li><a href="#">Section</a></li>
+      <li>Page Title</li>
+    </ul>
+    <div id="menu-pane">
+      <div class="hero">
+        Hello Donovan Beck
+      </div>
+      <div class="menu-wrapper">
+        <div id="tab-pane">
+          <div class="tab-header">
+            <h2 id="tab-title"></h2>
+            <button onclick="closeTab()"></button>
+          </div>
+        </div>
+        <ul class="menu" id="main-menu">          
+          </ul>
+      </div>
+    </div>
+  </div>
+  <script src="assets/menu.js"></script>
+  <script src="assets/main.js"></script>
+</body>
+</html>

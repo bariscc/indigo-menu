@@ -1,0 +1,366 @@
+// css reset
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+body, h1, h2, h3, h4, h5, h6, p, ol, ul, button {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+ol, ul {
+  list-style: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+}
+// variables
+@darkBlue: rgb(1, 66, 106);
+@blue: rgb(38, 134, 172);
+@lightBlue: rgb(97, 162, 190);
+@gray: rgb(248, 246, 248);
+// defaults
+html, body {
+  height: 100%;
+  overflow: hidden
+}
+body {
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  background-color: @gray;
+  color: #fff;
+  display: flex;
+  flex-flow: column;
+}
+button {
+  cursor: pointer;
+  background-color: Transparent;
+  border: none;
+  outline: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+// page styles
+header {
+  background: left / contain no-repeat url(ribbon.png) @darkBlue;
+  display: flex;
+  padding: 5px 5px 5px 40px;
+  justify-content: space-between;
+  position: relative;
+  flex-shrink: 0;
+  img {
+    height: 50px;
+    width: auto;
+  }
+  button {
+    width: 50px;
+    height: 50px;
+  }
+}
+.content {
+  height: 100%;
+  position: relative;
+  .breadcrumbs {
+    padding: 5px 10px;
+    list-style: none;
+    background-color: @blue;
+    li {
+      display: inline;
+      font-size: 12px;
+      font-weight: bold;
+      +li:before {
+        padding: 2px;
+        content: ">";
+      }
+    }
+  }
+  #menu-pane {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transition: left .3s ease;
+    background-color: @blue;
+    .hero {
+      flex-shrink: 0;
+      height: 100px;
+      background: center / cover no-repeat url('sky.jpg');
+      padding: 16px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    &.open {
+      left: 0;
+      .menu-wrapper {
+        .menu {
+          opacity: 1;
+        }
+      }
+    }
+    .menu-wrapper {
+      flex-grow: 1;
+      position: relative;
+      overflow: hidden;
+      .menu {
+        opacity: 0;
+        height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        transition: opacity .5s ease-in-out;
+        transition-delay: .3s;
+        li {
+          cursor: pointer;
+          display: flex;
+          height: 70px;
+          align-items: center;
+          border-bottom: 1px solid @lightBlue;
+          transition: all .3s ease-in-out;
+          a {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+          }
+          img {
+            margin-left: 15px;
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+          }
+          p {
+            padding: 0 15px;
+            flex-grow: 1;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+          }
+          .more {
+            flex-shrink: 0;
+            width: 60px;
+            padding-right: 5px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: fade(@gray, 25%);
+          }
+          &.highlight {
+            background-color: #fff;
+            p {
+              color: @blue;
+            }
+            .chevron {
+              border-color: @blue
+            }
+          }
+        }
+      }
+      #tab-pane {
+        &.open+.menu li:not(.highlight) {
+          opacity: .3;
+        }
+        transition: all .1s ease;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 0;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        &.open {
+          left: 0;
+          width: 100%;
+          padding-left: 60px;
+        }
+        .tab-header {
+          flex-shrink: 0;
+          background-color: @lightBlue;
+          box-shadow: -1px 0px 0px 0px fade(#fff, 80%);
+          height: 70px;
+          padding: 0 10px 0 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          h2 {
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+          }
+          button {
+            width: 30px;
+            height: 30px;
+            position: relative;
+            flex-shrink: 0;
+            &:before, &:after {
+              position: absolute;
+              left: 14px;
+              top: 6px;
+              content: ' ';
+              height: 18px;
+              width: 2px;
+              background-color: white;
+            }
+            &:before {
+              transform: rotate(45deg);
+            }
+            &:after {
+              transform: rotate(-45deg);
+            }
+          }
+        }
+        .tab {
+          flex-grow: 1;
+          display: none;
+          box-shadow: -1px 0px 0px 0px fade(#fff, 80%);
+          background-color: @blue;
+          overflow-y: auto;
+          &.active {
+            display: block;
+          }
+          .list {
+            height: 100%;
+            li {
+              cursor: pointer;
+              flex-wrap: wrap;
+              font-weight: bold;
+              display: flex;
+              align-items: center;
+              border-bottom: 1px solid @lightBlue;
+              justify-content: space-between;
+              p, a {
+                font-weight: inherit;
+                padding-left: 25px;
+                min-height: 56px;
+                align-items: center;
+                display: flex;
+              }
+              a {
+                width: 100%;
+              }
+              button {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 10px 5px 0;
+                .chevron {
+                  width: 10px;
+                  height: 10px;
+                }
+              }
+              hr {
+                width: 100%;
+                border: 0;
+                margin: 0;
+              }
+              ul {
+                transition: max-height .2s ease;
+                box-shadow: inset 0px 1px 1px 0px #2686ac;
+                background-color: lighten(@lightBlue, 10%);
+                max-height: 0;
+                overflow: hidden;
+                width: 100%;
+                li {
+                  cursor: pointer;
+                  padding-left: 25px;
+                  border-color: lighten(@lightBlue, 5%)
+                }
+              }
+              &.show {
+                background-color: @lightBlue;
+                button {
+                  padding-top: 10px;
+                  .chevron {
+                    transform: rotate(315deg)
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// menu chevron
+.chevron {
+  width: 14px;
+  height: 14px;
+  display: block;
+  border-top: 2px solid fade(#fff, 75%);
+  border-right: 2px solid fade(#fff, 75%);
+  transform: rotate(45deg);
+  &.down {
+    transform: rotate(135deg);
+  }
+  &.up {
+    transform: rotate(-45deg);
+  }
+}
+// hamburger icon
+.hamburger {
+  width: 50px;
+  height: 50px;
+  position: relative;
+  transition-duration: 0.5s;
+  .icon {
+    transition-duration: 0.25s;
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    top: 25px;
+    left: 10px;
+    background-color: #fff;
+    &:before, &:after {
+      transition-duration: 0.25s;
+      position: absolute;
+      width: 30px;
+      height: 2px;
+      background-color: #fff;
+      content: "";
+    }
+    &:before {
+      top: -7px;
+      left: 0;
+    }
+    &:after {
+      top: 7px;
+      left: 0;
+    }
+  }
+  &.open {
+    transition-duration: .5s;
+    transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    .icon {
+      transition-duration: 0.5s;
+      background-color: transparent;
+      &:before {
+        transition-duration: 0.5s;
+        top: 0;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
+      &:after {
+        transition-duration: 0.5s;
+        top: 0;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+      }
+    }
+  }
+}
